@@ -3,6 +3,7 @@
   <head>
     <title>{{resource_name}} API</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/assets/application.css"/>
     <style>
       td.required .name:after {
         float: right;
@@ -94,10 +95,10 @@
             <pre class="response headers">{{ response_headers_text }}</pre>
             <h4>Status</h4>
             <pre class="response status">{{ response_status }} {{ response_status_text}}</pre>
-            {{# response_body }}
+            {{# response_body_formatted }}
               <h4>Body</h4>
-              <pre class="response body">{{{ response_body }}}</pre>
-            {{/ response_body }}
+              {{{ response_body_formatted }}}
+            {{/ response_body_formatted }}
           {{/ response_status }}
         {{/ requests }}
       </div>

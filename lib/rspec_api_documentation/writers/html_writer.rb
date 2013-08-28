@@ -81,6 +81,11 @@ module RspecApiDocumentation
           hash[:request_headers_text] = format_hash(hash[:request_headers])
           hash[:request_query_parameters_text] = format_hash(hash[:request_query_parameters])
           hash[:response_headers_text] = format_hash(hash[:response_headers])
+          if hash[:response_headers]["Content-Type"] =~ /^application\/json/
+            hash[:response_body_formatted] = format_json(hash[:response_body])
+          else
+            hash[:response_body_formatted] = hash[:response_body]
+          end
           if @host
             hash[:curl] = hash[:curl].output(@host) if hash[:curl].is_a? RspecApiDocumentation::Curl
           else
@@ -96,6 +101,11 @@ module RspecApiDocumentation
         hash.collect do |k, v|
           "#{k}: #{v}"
         end.join("\n")
+      end
+
+      def format_json(hash={})
+        json = JSON::load(hash)
+        CodeRay.scan(JSON::pretty_generate(json), :json).div
       end
     end
   end
