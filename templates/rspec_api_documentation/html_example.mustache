@@ -79,10 +79,10 @@
             <pre class="request query_parameters highlight">{{ request_query_parameters_text }}</pre>
           {{/ request_query_parameters_text }}
 
-          {{# request_body }}
+          {{# request_body_formatted }}
             <h4>Body</h4>
-            <pre class="request body">{{{ request_body }}}</pre>
-          {{/ request_body }}
+            {{{ request_body_formatted }}}
+          {{/ request_body_formatted }}
 
           {{# curl }}
             <h4>cURL</h4>
