@@ -81,11 +81,17 @@ module RspecApiDocumentation
           hash[:request_headers_text] = format_hash(hash[:request_headers])
           hash[:request_query_parameters_text] = format_hash(hash[:request_query_parameters])
           hash[:response_headers_text] = format_hash(hash[:response_headers])
-          if hash[:response_headers]["Content-Type"] =~ %r(^application/json)
-            hash[:response_body_formatted] = format_json(hash[:response_body])
-          else
-            hash[:response_body_formatted] = hash[:response_body]
-          end
+
+          hash[:response_body_formatted] = if hash[:response_headers]["Content-Type"] =~ %r(^application/json)
+                                             format_json(hash[:response_body])
+                                           else
+                                             hash[:response_body]
+                                           end
+
+          hash[:request_body_formatted] = if hash[:request_headers]["Content-Type"] =~ %r(^application/json)
+                                            format_json(hash[:request_body])
+                                          end if hash[:request_body]
+
           if @host
             hash[:curl] = hash[:curl].output(@host) if hash[:curl].is_a? RspecApiDocumentation::Curl
           else
