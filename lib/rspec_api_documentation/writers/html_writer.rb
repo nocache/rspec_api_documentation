@@ -72,18 +72,10 @@ module RspecApiDocumentation
 
       def route
         route = super || ''
-        route_parts = route.split('/')
-        if route_parts.try(:length) > 1
-          href, new_route = '', []
-          route_parts.select{|p| p}.reverse.each do |part|
-            if href.empty?
-              new_route.push part
-            else
-              new_route.push "<a href=\"#{href}\">#{part}</a>"
-            end
-            href << '../'
-          end
-          route = new_route.reverse.join('/')
+        route_parts = route.split('/').select{|p| !p.empty?}
+        if route_parts.try(:length) > 0
+          route_parts[0] = "<a href=\"..\">#{route_parts[0]}</a>"
+          route = ([nil] | route_parts).join('/')
         end
         route
       end
