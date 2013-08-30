@@ -34,7 +34,10 @@
 
       <div class="article">
         <h2>{{ description }}</h2>
-        <h3>{{ http_method }} {{ route }}</h3>
+        <h3>
+          {{ http_method }}
+          {{{ route }}}
+        </h3>
         {{# explanation }}
           <p class="explanation">
             {{ explanation }}
